@@ -4,8 +4,10 @@ import type { ApiResponse, Task } from './types/types';
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [listQueryStatus, setListQueryStatus] = useState<'loading' | 'success' | 'error' | 'idle'>('idle');
 
   useEffect(() => {
+    setListQueryStatus('loading')
     fetch('https://trelly.it-incubator.app/api/1.0/boards/tasks', {
       headers: {
         'API-KEY': 'e89a9a5a-8ec8-4868-866c-0e822747b9ad',
@@ -15,6 +17,7 @@ function App() {
       .then((data) => {
         // console.log(data.data);
         setTasks(data.data);
+        setListQueryStatus('success')
       });
   }, []);
 
@@ -64,6 +67,7 @@ function App() {
           borderRadius: '8px',
         }}>
         <h4>Tasks</h4>
+        {listQueryStatus === 'loading' && <p>Loading...</p>}
         <ul>
           {tasks.map((task) => (
             <li key={task.id}>
