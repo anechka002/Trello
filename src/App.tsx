@@ -5,6 +5,9 @@ import type { ApiResponse, Task } from './types/types';
 function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [listQueryStatus, setListQueryStatus] = useState<'loading' | 'success' | 'error' | 'idle'>('idle');
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
+
+  
 
   useEffect(() => {
     setListQueryStatus('loading')
@@ -15,7 +18,6 @@ function App() {
     })
       .then((res) => res.json()as Promise<ApiResponse>)
       .then((data) => {
-        // console.log(data.data);
         setTasks(data.data);
         setListQueryStatus('success')
       });
@@ -30,6 +32,10 @@ function App() {
       minute: '2-digit',
     });
   };
+
+  const handleToggleSelectedTask = (taskId: string) => {
+    setSelectedTaskId((prev) => prev ===  taskId ? null : taskId)
+  }
 
   return (
     <>
@@ -69,15 +75,16 @@ function App() {
         <h4>Tasks</h4>
         {listQueryStatus === 'loading' && <p>Loading...</p>}
         <ul>
-          {tasks.map((task) => (
-            <li key={task.id}>
-              <div>{task.attributes.title}</div>
+          {tasks.map((task) => {
+            const color = task.id === selectedTaskId ? '#7863fd' : 'white'
+            return <li key={task.id} style={{color: color}}>
+              <h3 onClick={() => {handleToggleSelectedTask(task.id)}}>{task.attributes.title}</h3>
               {/* <div>Status: {task.attributes.status}</div>
               <div>Priority: {task.attributes.priority}</div>
               <div>Attachments: {task.attributes.attachmentsCount}</div>
               <div>Date: {FormatDate(task.attributes.addedAt)}</div> */}
             </li>
-          ))}
+})}
         </ul>
       </div>
     </>
