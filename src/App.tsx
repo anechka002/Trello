@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import type { TasksResponse, Task, TaskDetailResponse } from './types/types';
 
@@ -9,6 +9,8 @@ function App() {
 
   const [selectedTask, setSelectedTask] = useState<TaskDetailResponse | null>(null);
   const [detailsQueryStatus, setDetailsQueryStatus] = useState<'loading' | 'success' | 'error' | 'idle'>('idle');
+
+  const abortControllerRef = useRef<null | AbortController>(null)
 
   useEffect(() => {
     setListQueryStatus('loading');
@@ -38,9 +40,17 @@ function App() {
   const handleSelectTaskClick = (taskId: string, boardId: string) => {
     setSelectedTaskId((prev) => (prev === taskId ? null : taskId));
     setDetailsQueryStatus('loading')
+
+    // Отменяем предыдущий запрос
+    abortControllerRef.current?.abort()
+    // Создаём новый AbortController для нового запроса
+    abortControllerRef.current = new AbortController()
+
+
     fetch(
       `https://trelly.it-incubator.app/api/1.0/boards/${boardId}/tasks/${taskId}`,
       {
+        signal: abortControllerRef.current.signal,
         headers: {
           'API-KEY': 'e89a9a5a-8ec8-4868-866c-0e822747b9ad',
         },
@@ -48,7 +58,7 @@ function App() {
     )
       .then((res) => res.json() as Promise<TaskDetailResponse>)
       .then((data) => {
-        console.log('Task detail response', data);
+        // console.log('Task detail response', data);
         setSelectedTask(data);
         setDetailsQueryStatus('success')
       })
