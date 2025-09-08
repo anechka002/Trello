@@ -1,8 +1,8 @@
 import {TaskItem} from "@/features/tasks/ui/TaskItem/TaskItem.tsx";
 import type {Task} from "@/types/types.ts";
-import {useEffect, useState} from "react";
 import {tasksApi} from "@/features/tasks/api/api.ts";
 import s from "@/App.module.css";
+import {useQuery} from "@/hooks/useQuery.ts";
 
 type Props = {
   selectedTaskId: string | null | undefined;
@@ -10,18 +10,14 @@ type Props = {
 }
 
 export const TasksList = ({ selectedTaskId, onTaskSelect}: Props) => {
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [listQueryStatus, setListQueryStatus] = useState<'loading' | 'success' | 'error' | 'idle'>('idle');
 
-  useEffect(() => {
-    setListQueryStatus('loading');
-    tasksApi.getTasks()
-      .then((data) => {
-        // console.log(data)
-        setTasks(data.data);
-        setListQueryStatus('success');
-      });
-  }, []);
+  const {
+    status,
+    data: tasks,
+  } = useQuery({
+    queryKeys: ['tasks'],
+    queryFn: () => tasksApi.getTasks()
+  });
 
   const handleSelectTaskClick = (task: Task) => {
     if(selectedTaskId === task.id) {
@@ -35,8 +31,8 @@ export const TasksList = ({ selectedTaskId, onTaskSelect}: Props) => {
     <div>
       <ul>
         <h3 className={s.title}>List</h3>
-        {listQueryStatus === 'loading' && <p>Loading...</p>}
-        {listQueryStatus === 'success' && tasks.map((task) => {
+        {status === 'loading' && <p>Loading...</p>}
+        {status === 'success' && tasks?.data.map((task) => {
           return (
             <TaskItem key={task.id} task={task} onSelect={handleSelectTaskClick} isSelected={selectedTaskId === task.id} />
           );
