@@ -13,10 +13,9 @@ type CachedItem<T> = {
   value: T;              // сами данные
   expirationDate: number // timestamp, когда данные устареют
 }
-
-export const TaskDetail = ({selectedTaskId, boardId}: Props) => {
+function useTaskDetail(selectedTaskId: string | null | undefined, boardId: string | null | undefined) {
   const [fullTask, setFullTask] = useState<TaskDetailResponse | null>(null);
-  const [detailsQueryStatus, setDetailsQueryStatus] = useState<'loading' | 'success' | 'error' | 'idle'>('idle');
+  const [detailsQueryStatus, setDetailsQueryStatus] = useState<'loading' | 'success' | 'error' | 'pending'>('pending');
   const abortControllerRef = useRef<null | AbortController>(null)
 
   const cacheData = useRef<Record<string, CachedItem<TaskDetailResponse>>>({})
@@ -28,7 +27,7 @@ export const TaskDetail = ({selectedTaskId, boardId}: Props) => {
 
     if(!selectedTaskId || !boardId) {
       setFullTask(null)
-      setDetailsQueryStatus('idle')
+      setDetailsQueryStatus('pending')
       return
     }
 
@@ -69,26 +68,34 @@ export const TaskDetail = ({selectedTaskId, boardId}: Props) => {
 
   }, [selectedTaskId, boardId])
 
+  return {fullTask, detailsQueryStatus}
+}
+
+export const TaskDetail = ({selectedTaskId, boardId}: Props) => {
+
+  const {fullTask: task, detailsQueryStatus: status} = useTaskDetail(selectedTaskId, boardId)
+
+
   return (
     <div>
       <h3 className={s.title}>Detail</h3>
 
-      {detailsQueryStatus === 'idle' && <p>No tasks</p>}
-      {detailsQueryStatus === 'loading' && <p>Loading...</p>}
-      {detailsQueryStatus === 'error' && <p>Error loading task details</p>}
+      {status === 'pending' && <p>No tasks</p>}
+      {status === 'loading' && <p>Loading...</p>}
+      {status === 'error' && <p>Error loading task details</p>}
 
-      {fullTask && (
+      {task && (
         <div>
-          <h2>{fullTask.data.attributes.title}</h2>
-          <div>Priority: {fullTask.data.attributes.priority}</div>
-          <div>Status: {fullTask.data.attributes.status}</div>
+          <h2>{task.data.attributes.title}</h2>
+          <div>Priority: {task.data.attributes.priority}</div>
+          <div>Status: {task.data.attributes.status}</div>
           <div>
             Description:{' '}
-            {fullTask.data.attributes.description
-              ? JSON.stringify(fullTask.data.attributes.description)
+            {task.data.attributes.description
+              ? JSON.stringify(task.data.attributes.description)
               : 'Нет описания'}
           </div>
-          <div>Date: {formatDate(fullTask.data.attributes.addedAt)}</div>
+          <div>Date: {formatDate(task.data.attributes.addedAt)}</div>
         </div>
       )}
     </div>
