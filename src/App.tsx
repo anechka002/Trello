@@ -3,28 +3,28 @@ import './App.css'
 import s from './App.module.css';
 import {TasksList} from "@/features/tasks/ui/TasksList/TasksList.tsx";
 import {TaskDetail} from "@/features/tasks/ui/TaskDetail/TaskDetail.tsx";
+import type {Task} from "@/types/types.ts";
 
 function App() {
 
-  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
-  const [boardId, setBoardId] = useState<string | null>(null);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   // const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleSelectTaskClick = (taskId: string, boardId: string) => {
-    setSelectedTaskId((prev) => (prev === taskId ? null : taskId));
-    setBoardId((prev) => (prev === boardId ? null : taskId));
+  const handleSelectTaskClick = (task: Task | null) => {
+    setSelectedTask(task)
+
     // setIsModalOpen(true);
   }
 
+
   const handleResetTaskClick = () => {
-    setSelectedTaskId(null);
-    setBoardId(null)
+    setSelectedTask(null);
   }
 
   // const handleCloseModal = () => {
-  //   setIsModalOpen(false);
-  //   setSelectedTaskId(null);
+  //   // setIsModalOpen(false);
+  //   setSelectedTask(null);
   // };
 
 
@@ -41,17 +41,17 @@ function App() {
 
       <div className={s.container}>
 
-        <TasksList selectedTaskId={selectedTaskId} handleSelectTaskClick={handleSelectTaskClick}/>
-        <TaskDetail selectedTaskId={selectedTaskId} boardId={boardId}/>
+        <TasksList selectedTaskId={selectedTask?.id} onTaskSelect={handleSelectTaskClick}/>
+        <TaskDetail selectedTaskId={selectedTask?.id} boardId={selectedTask?.attributes.boardId}/>
 
-        {/* Модалка */}
+         {/*Модалка*/}
         {/*{isModalOpen && (*/}
         {/*  <div className={s.backdropStyle}>*/}
         {/*    <div className={s.modalStyle}>*/}
         {/*      <button className={s.closeBtnStyle} onClick={handleCloseModal}>*/}
         {/*        ✖*/}
         {/*      </button>*/}
-        {/*      <TaskDetail selectedTaskId={selectedTaskId} boardId={boardId} />*/}
+        {/*      <TaskDetail selectedTaskId={selectedTask?.id} boardId={selectedTask?.attributes.boardId} />*/}
         {/*    </div>*/}
         {/*  </div>*/}
         {/*)}*/}

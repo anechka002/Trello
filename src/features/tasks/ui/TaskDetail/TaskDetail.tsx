@@ -5,12 +5,12 @@ import s from '../../../../App.module.css'
 import { formatDate } from "@/common/utils/formatDate";
 
 type Props = {
-  selectedTaskId: string | null;
-  boardId: string | null;
+  boardId: string | null | undefined;
+  selectedTaskId: string | null | undefined;
 }
 
 export const TaskDetail = ({selectedTaskId, boardId}: Props) => {
-  const [selectedTask, setSelectedTask] = useState<TaskDetailResponse | null>(null);
+  const [fullTask, setFullTask] = useState<TaskDetailResponse | null>(null);
   const [detailsQueryStatus, setDetailsQueryStatus] = useState<'loading' | 'success' | 'error' | 'idle'>('idle');
   const abortControllerRef = useRef<null | AbortController>(null)
 
@@ -18,10 +18,12 @@ export const TaskDetail = ({selectedTaskId, boardId}: Props) => {
     setDetailsQueryStatus('loading')
 
     if(!selectedTaskId || !boardId) {
-      setSelectedTask(null)
+      setFullTask(null)
       setDetailsQueryStatus('idle')
       return
     }
+
+    setDetailsQueryStatus('loading')
 
     // Отменяем предыдущий запрос
     abortControllerRef.current?.abort()
@@ -32,7 +34,7 @@ export const TaskDetail = ({selectedTaskId, boardId}: Props) => {
     tasksApi.getTaskDetails(selectedTaskId, boardId, abortController.signal)
       .then((data) => {
         // console.log('Task detail response', data);
-        setSelectedTask(data);
+        setFullTask(data);
         setDetailsQueryStatus('success')
       })
       .catch((error) => {
@@ -45,22 +47,23 @@ export const TaskDetail = ({selectedTaskId, boardId}: Props) => {
   return (
     <div>
       <h3 className={s.title}>Detail</h3>
+
       {detailsQueryStatus === 'idle' && <p>No tasks</p>}
       {detailsQueryStatus === 'loading' && <p>Loading...</p>}
-      {detailsQueryStatus === 'success' && selectedTask && (
+      {detailsQueryStatus === 'error' && <p>Error loading task details</p>}
+
+      {fullTask && (
         <div>
-          <h2>{selectedTask.data.attributes.title}</h2>
-          <div>Priority: {selectedTask.data.attributes.priority}</div>
-          <div>Status: {selectedTask.data.attributes.status}</div>
+          <h2>{fullTask.data.attributes.title}</h2>
+          <div>Priority: {fullTask.data.attributes.priority}</div>
+          <div>Status: {fullTask.data.attributes.status}</div>
           <div>
             Description:{' '}
-            {selectedTask.data.attributes.description
-              ? JSON.stringify(selectedTask.data.attributes.description)
+            {fullTask.data.attributes.description
+              ? JSON.stringify(fullTask.data.attributes.description)
               : 'Нет описания'}
           </div>
-          <div>
-            Date: {formatDate(selectedTask.data.attributes.addedAt)}
-          </div>
+          <div>Date: {formatDate(fullTask.data.attributes.addedAt)}</div>
         </div>
       )}
     </div>

@@ -5,11 +5,11 @@ import {tasksApi} from "@/features/tasks/api/api.ts";
 import s from "@/App.module.css";
 
 type Props = {
-  selectedTaskId: string | null;
-  handleSelectTaskClick:(taskId: string, boardId: string) => void
+  selectedTaskId: string | null | undefined;
+  onTaskSelect:(task: Task | null) => void
 }
 
-export const TasksList = ({ selectedTaskId, handleSelectTaskClick}: Props) => {
+export const TasksList = ({ selectedTaskId, onTaskSelect}: Props) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [listQueryStatus, setListQueryStatus] = useState<'loading' | 'success' | 'error' | 'idle'>('idle');
 
@@ -23,6 +23,14 @@ export const TasksList = ({ selectedTaskId, handleSelectTaskClick}: Props) => {
       });
   }, []);
 
+  const handleSelectTaskClick = (task: Task) => {
+    if(selectedTaskId === task.id) {
+      onTaskSelect(null)
+    } else {
+      onTaskSelect(task)
+    }
+  }
+
   return (
     <div>
       <ul>
@@ -30,7 +38,7 @@ export const TasksList = ({ selectedTaskId, handleSelectTaskClick}: Props) => {
         {listQueryStatus === 'loading' && <p>Loading...</p>}
         {listQueryStatus === 'success' && tasks.map((task) => {
           return (
-            <TaskItem key={task.id} task={task} selectedTaskId={selectedTaskId} handleSelectTaskClick={handleSelectTaskClick}/>
+            <TaskItem key={task.id} task={task} onSelect={handleSelectTaskClick} isSelected={selectedTaskId === task.id} />
           );
         })}
       </ul>

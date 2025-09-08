@@ -2,13 +2,13 @@ import type {Task} from "@/types/types.ts";
 
 type Props = {
   task: Task;
-  selectedTaskId: string | null;
-  handleSelectTaskClick: (taskId: string, boardId: string) => void;
+  isSelected: boolean;
+  onSelect: (task: Task) => void;
 }
 
-export const TaskItem = ({task, selectedTaskId, handleSelectTaskClick}: Props) => {
+export const TaskItem = ({task, isSelected, onSelect}: Props) => {
 
-  const color = task.id === selectedTaskId ? '#7863fd' : 'white';
+  const color = isSelected ? '#7863fd' : 'white';
 
   return (
     <li
@@ -17,7 +17,7 @@ export const TaskItem = ({task, selectedTaskId, handleSelectTaskClick}: Props) =
     >
       <h3
         onClick={() => {
-          handleSelectTaskClick(task.id, task.attributes.boardId);
+          onSelect(task);
         }}
       >
         {task.attributes.title}
