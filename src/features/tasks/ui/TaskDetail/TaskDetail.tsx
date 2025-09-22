@@ -1,7 +1,7 @@
-import {tasksApi} from "@/features/tasks/api/api.ts";
 import s from '../../../../App.module.css'
 import { formatDate } from "@/common/utils/formatDate";
 import {keepPreviousData, useQuery} from "@tanstack/react-query";
+import {client} from "@/shared/api/client.ts";
 
 type Props = {
   boardId: string | null | undefined;
@@ -12,8 +12,18 @@ export const TaskDetail = ({selectedTaskId, boardId}: Props) => {
 
   const {data: task, isPending, isError, isFetching} = useQuery({
     queryKey: ['task', selectedTaskId, boardId], // обязательно включаем ID
-    queryFn: ({signal}) => {
-      return tasksApi.getTaskDetails(selectedTaskId!, boardId!, signal)
+    queryFn: async ({signal}) => {
+      // return tasksApi.getTaskDetails(selectedTaskId!, boardId!, signal)
+      const response = await client.GET('/boards/{boardId}/tasks/{taskId}', {
+        params: {
+          path: {
+            boardId: boardId!,
+            taskId: selectedTaskId!
+          }
+        },
+        signal: signal
+      })
+      return response.data
     },
     enabled: Boolean(selectedTaskId), // запрос только если есть трек
     placeholderData: keepPreviousData, // временно показывай и сохраняй предыдущие данные

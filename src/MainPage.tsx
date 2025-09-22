@@ -1,16 +1,16 @@
 import {useState} from "react";
-import type {Task} from "@/types/types.ts";
 import s from "@/App.module.css";
 import {TasksList} from "@/features/tasks/ui/TasksList/TasksList.tsx";
 import {TaskDetail} from "@/features/tasks/ui/TaskDetail/TaskDetail.tsx";
+import type {SchemaGlobalTaskListItemJsonApiData} from "@/shared/api/schema";
 
 export const MainPage = () => {
 
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [selectedTask, setSelectedTask] = useState<SchemaGlobalTaskListItemJsonApiData | null>(null);
 
   // const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleSelectTaskClick = (task: Task | null) => {
+  const handleSelectTaskClick = (task: SchemaGlobalTaskListItemJsonApiData | null) => {
     setSelectedTask(task)
 
     // setIsModalOpen(true);

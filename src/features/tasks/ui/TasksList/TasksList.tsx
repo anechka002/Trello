@@ -1,23 +1,25 @@
 import {TaskItem} from "@/features/tasks/ui/TaskItem/TaskItem.tsx";
-import type {Task} from "@/types/types.ts";
-import {tasksApi} from "@/features/tasks/api/api.ts";
 import s from "@/App.module.css";
 import {useQuery} from "@tanstack/react-query";
+import {client} from "@/shared/api/client.ts";
+import type {SchemaGlobalTaskListItemJsonApiData} from "@/shared/api/schema";
 
 type Props = {
   selectedTaskId: string | null | undefined;
-  onTaskSelect:(task: Task | null) => void
+  onTaskSelect:(task: SchemaGlobalTaskListItemJsonApiData | null) => void
 }
 
 export const TasksList = ({ selectedTaskId, onTaskSelect}: Props) => {
 
   const { data: tasks, isPending, isError} = useQuery({
     queryKey: ['tasks'],
-    queryFn: () => tasksApi.getTasks()
-
+    queryFn: async() => {
+      const clientData = await client.GET('/boards/tasks') //tasksApi.getTasks()
+      return clientData.data!
+    }
   });
 
-  const handleSelectTaskClick = (task: Task) => {
+  const handleSelectTaskClick = (task: SchemaGlobalTaskListItemJsonApiData) => {
     if(selectedTaskId === task.id) {
       onTaskSelect(null)
     } else {

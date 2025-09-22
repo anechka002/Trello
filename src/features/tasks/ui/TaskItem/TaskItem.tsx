@@ -1,9 +1,11 @@
-import type {Task} from "@/types/types.ts";
+import type {
+  SchemaGlobalTaskListItemJsonApiData
+} from "@/shared/api/schema";
 
 type Props = {
-  task: Task;
+  task: SchemaGlobalTaskListItemJsonApiData;
   isSelected: boolean;
-  onSelect: (task: Task) => void;
+  onSelect: (task: SchemaGlobalTaskListItemJsonApiData) => void;
 }
 
 export const TaskItem = ({task, isSelected, onSelect}: Props) => {
