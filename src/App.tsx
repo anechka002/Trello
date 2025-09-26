@@ -1,8 +1,9 @@
 import './App.css'
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import {MainPage} from "@/MainPage.tsx";
+import {Routing} from "@/common/routing/Routing.tsx";
+import {Header} from "@/common/components/header/Header.tsx";
 
-// Create a client
+// Создать клиента
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -17,9 +18,12 @@ window.__TANSTACK_QUERY_CLIENT__ = queryClient
 
 function App() {
   return (
-    // Provide the client to your App
+    // Предоставьте клиенту доступ к вашему App
     <QueryClientProvider client={queryClient}>
-      <MainPage />
+      <div>
+        <Header/>
+        <Routing/>
+      </div>
     </QueryClientProvider>
   );
 }

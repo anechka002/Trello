@@ -2,34 +2,34 @@ import s from '../../../../App.module.css'
 import { formatDate } from "@/common/utils/formatDate";
 import {keepPreviousData, useQuery} from "@tanstack/react-query";
 import {client} from "@/shared/api/client.ts";
+import {useParams} from "react-router";
 
-type Props = {
-  boardId: string | null | undefined;
-  selectedTaskId: string | null | undefined;
-}
+export const TaskDetail = () => {
 
-export const TaskDetail = ({selectedTaskId, boardId}: Props) => {
+  const {boardId} = useParams()
+  const {taskId} = useParams()
+  // console.log('boardId ', boardId)
+  // console.log('taskId ', taskId)
 
   const {data: task, isPending, isError, isFetching} = useQuery({
-    queryKey: ['task', selectedTaskId, boardId], // обязательно включаем ID
+    queryKey: ['task', taskId, boardId], // обязательно включаем ID
     queryFn: async ({signal}) => {
-      // return tasksApi.getTaskDetails(selectedTaskId!, boardId!, signal)
       const response = await client.GET('/boards/{boardId}/tasks/{taskId}', {
         params: {
           path: {
             boardId: boardId!,
-            taskId: selectedTaskId!
+            taskId: taskId!
           }
         },
         signal: signal
       })
       return response.data
     },
-    enabled: Boolean(selectedTaskId), // запрос только если есть трек
+    enabled: Boolean(taskId), // запрос только если есть трек
     placeholderData: keepPreviousData, // временно показывай и сохраняй предыдущие данные
   });
 
-  if(!selectedTaskId) return <p>No tasks</p>
+  if(!taskId) return <p>No tasks</p>
 
   if (isPending) {
     return <span>Loading...</span>

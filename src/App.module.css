@@ -9,6 +9,10 @@
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.6);
 }
 
+.header a.active {
+  color: white;
+}
+
 .title {
   color: black
 }

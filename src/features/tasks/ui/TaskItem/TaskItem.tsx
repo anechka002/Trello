@@ -1,29 +1,17 @@
 import type {
   SchemaGlobalTaskListItemJsonApiData
 } from "@/shared/api/schema";
+import {NavLink} from "react-router";
 
 type Props = {
   task: SchemaGlobalTaskListItemJsonApiData;
-  isSelected: boolean;
-  onSelect: (task: SchemaGlobalTaskListItemJsonApiData) => void;
 }
 
-export const TaskItem = ({task, isSelected, onSelect}: Props) => {
-
-  const color = isSelected ? '#7863fd' : 'white';
+export const TaskItem = ({task}: Props) => {
 
   return (
-    <li
-      key={task.id}
-      style={{color: color}}
-    >
-      <h3
-        onClick={() => {
-          onSelect(task);
-        }}
-      >
-        {task.attributes.title}
-      </h3>
+    <li key={task.id}>
+      <h3><NavLink to={`/tasks/${task.id}`}>{task.attributes.title}</NavLink></h3>
     </li>
   );
 };
