@@ -9,7 +9,7 @@ export const Header = () => {
 
   return (
       <header className={s.header}>
-        <NavLink className={renderClassName} to={PATH.MAIN}>Main</NavLink>
+        <NavLink className={renderClassName} to={PATH.MAIN}>Main</NavLink>{" "}
         <NavLink className={renderClassName} to={PATH.AUTH}>Auth</NavLink>
       </header>
   );

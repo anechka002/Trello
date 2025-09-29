@@ -1,13 +1,17 @@
-import {NavLink, Outlet} from "react-router";
-import {PATH} from "@/common/routing/Routing.tsx";
+import {NavLink, type NavLinkRenderProps, Outlet} from "react-router";
+import s from "@/App.module.css";
 
 export const AuthLayout = () => {
+
+  const renderClassName = ({ isActive }: NavLinkRenderProps) =>
+    isActive ? s.active : ""
+
   return (
     <div>
       <h3>Добро пожаловать!</h3>
       <nav>
-        <NavLink to={PATH.LOGIN}>Login</NavLink> |{" "}
-        <NavLink to={PATH.REGISTER}>Register</NavLink>
+        <NavLink to={"/auth/login"} className={renderClassName}>Login</NavLink> |{" "}
+        <NavLink to={"/auth/register"} className={renderClassName}>Register</NavLink>
       </nav>
       <Outlet />
     </div>

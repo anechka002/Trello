@@ -13,6 +13,12 @@
   color: white;
 }
 
+.active {
+  color: red;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .title {
   color: black
 }
