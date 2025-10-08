@@ -1,17 +1,10 @@
 import {TaskItem} from "@/features/tasks/ui/TaskItem/TaskItem.tsx";
 import s from "@/App.module.css";
-import {useQuery} from "@tanstack/react-query";
-import {client} from "@/shared/api/client.ts";
+import {useTasksQuery} from "@/features/tasks/model/useTasksQuery.ts";
 
 export const TasksList = () => {
 
-  const { data: tasks, isPending, isError} = useQuery({
-    queryKey: ['tasks'],
-    queryFn: async() => {
-      const clientData = await client.GET('/boards/tasks')
-      return clientData.data!
-    }
-  });
+  const { data: tasks, isPending, isError} = useTasksQuery()
 
   if (isPending) {
     return <span>Loading...</span>
