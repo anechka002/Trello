@@ -1,8 +1,7 @@
 import s from '../../../../App.module.css'
-import { formatDate } from "@/common/utils/formatDate";
-import {keepPreviousData, useQuery} from "@tanstack/react-query";
-import {client} from "@/shared/api/client.ts";
+import {useQuery} from "@tanstack/react-query";
 import {useParams} from "react-router";
+import {taskDetailOptions} from "@/features/tasks/model/taskDetailOptions.ts";
 
 export const TaskDetail = () => {
 
@@ -11,23 +10,7 @@ export const TaskDetail = () => {
   // console.log('boardId ', boardId)
   // console.log('taskId ', taskId)
 
-  const {data: task, isPending, isError, isFetching} = useQuery({
-    queryKey: ['task', taskId, boardId], // обязательно включаем ID
-    queryFn: async ({signal}) => {
-      const response = await client.GET('/boards/{boardId}/tasks/{taskId}', {
-        params: {
-          path: {
-            boardId: boardId!,
-            taskId: taskId!
-          }
-        },
-        signal: signal
-      })
-      return response.data
-    },
-    enabled: Boolean(taskId), // запрос только если есть трек
-    placeholderData: keepPreviousData, // временно показывай и сохраняй предыдущие данные
-  });
+  const {data: task, isPending, isError, isFetching} = useQuery(taskDetailOptions(taskId, boardId));
 
   if(!taskId) return <p>No tasks</p>
 
@@ -54,7 +37,7 @@ export const TaskDetail = () => {
               ? JSON.stringify(task.data.attributes.description)
               : 'Нет описания'}
           </div>
-          <div>Date: {formatDate(task.data.attributes.addedAt)}</div>
+          <div>Date: {new Date(task.data.attributes.addedAt).toLocaleDateString()}</div>
         </div>
       )}
     </div>
