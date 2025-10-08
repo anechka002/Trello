@@ -4,7 +4,7 @@ export const CommonLayout = () => {
   return (
     <div>
       <header>Layout from CommonLayout</header>
-      <Outlet/>
+        <Outlet/>
       <footer>footer CommonLayout</footer>
     </div>
   );
