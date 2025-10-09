@@ -11,7 +11,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Получить список моих созданных досок */
+        /** Get list of my created boards */
         get: operations["BoardsController_getMyBoards"];
         put?: never;
         post?: never;
@@ -28,10 +28,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Получить список всех досок, созданных всеми пользователями */
+        /** Get list of all boards created by all users */
         get: operations["BoardsPublicController_getBoards"];
         put?: never;
-        /** Создать новую доску */
+        /** Create new board */
         post: operations["BoardsController_createBoard"];
         delete?: never;
         options?: never;
@@ -46,12 +46,12 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Получить одну доску по ID */
+        /** Get one board by ID */
         get: operations["BoardsPublicController_getBoardById"];
-        /** Обновить одну из своих досок */
+        /** Update one of your boards */
         put: operations["BoardsController_updateBoard"];
         post?: never;
-        /** Удалить одну из своих досок */
+        /** Delete one of your boards */
         delete: operations["BoardsController_deleteBoard"];
         options?: never;
         head?: never;
@@ -66,7 +66,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        /** Поменять порядок досок */
+        /** Change board order */
         put: operations["BoardsController_reorder"];
         post?: never;
         delete?: never;
@@ -85,12 +85,12 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Загрузить главную фотографию-обложку для доски
+         * Upload main cover photo for board
          * @description
-         *     - Поддерживаются только изображения в горизонтальной ориентации
-         *     - Минимальная высота изображения — 500 пикселей
-         *     - Рекомендуемый формат: JPG или PNG
-         *     - Поле form-data: `file`
+         *     - Only images in landscape orientation are supported
+         *     - Minimum image height is 500 pixels
+         *     - Recommended format: JPG or PNG
+         *     - Form-data field: `file`
          *
          */
         post: operations["BoardsController_upload"];
@@ -107,7 +107,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Получить список всех тасок со всех досок, созданных всеми пользователями */
+        /** Get list of all tasks from all boards created by all users */
         get: operations["TasksPublicController_getAllTasks"];
         put?: never;
         post?: never;
@@ -124,10 +124,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Получить список задач, относящихся к указанной доске */
+        /** Get list of tasks belonging to the specified board */
         get: operations["TasksPublicController_getBoardTasks"];
         put?: never;
-        /** Добавить новую задачу на своей доске */
+        /** Add a new task to your board */
         post: operations["TasksController_createTask"];
         delete?: never;
         options?: never;
@@ -142,12 +142,12 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Получить детали задачи по ID */
+        /** Get task details by ID */
         get: operations["TasksPublicController_getTaskDetails"];
-        /** Обновить задачу */
+        /** Update task */
         put: operations["TasksController_updateTask"];
         post?: never;
-        /** Удалить задачу со своей доски */
+        /** Delete task from your board */
         delete: operations["TasksController_deleteTask"];
         options?: never;
         head?: never;
@@ -162,7 +162,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        /** Сменить порядок задач в рамках своей доски */
+        /** Change task order within your board */
         put: operations["TasksController_reorderTask"];
         post?: never;
         delete?: never;
@@ -179,7 +179,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        /** Переместить задачу на другую доску */
+        /** Move task to another board */
         put: operations["TasksController_moveTaskToBoard"];
         post?: never;
         delete?: never;
@@ -197,7 +197,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Загрузить один или несколько файлов для задачи */
+        /** Upload one or more files for task */
         post: operations["TasksController_uploadAttachment"];
         delete?: never;
         options?: never;
@@ -215,7 +215,7 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
-        /** Удалить файл для задачи */
+        /** Delete file for task */
         delete: operations["TasksController_deleteAttachment"];
         options?: never;
         head?: never;
@@ -230,9 +230,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * OAuth редирект
-         * @description The callback URL to redirect after grand access,
-         *          <a target="_blank" href="https://oauth.apihub.it-incubator.io/realms/apihub/protocol/openid-connect/auth?client_id=trelly&response_type=code&redirect_uri=http://localhost:3000/oauth2/callback&scope=openid">https://oauth.apihub.it-incubator.io/realms/apihub/protocol/openid-connect/auth?client_id=trelly&response_type=code&redirect_uri=http://localhost:3000/oauth2/callback&scope=openid</a>
+         * OAuth redirect
+         * @description The callback URL to redirect after granting access, <a target="_blank" href="https://oauth.apihub.it-incubator.io/realms/apihub/protocol/openid-connect/auth?client_id=trelly&response_type=code&redirect_uri=http://localhost:3000/oauth2/callback&scope=openid">https://oauth.apihub.it-incubator.io/realms/apihub/protocol/openid-connect/auth?client_id=trelly&response_type=code&redirect_uri=http://localhost:3000/oauth2/callback&scope=openid</a>
          */
         get: operations["AuthController_OauthRedirect"];
         put?: never;
@@ -252,7 +251,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Залогиниться с помощью кода, полученного после редиректа после авторизации через OAuth */
+        /** Log in using the code received after OAuth authorization redirect */
         post: operations["AuthController_login"];
         delete?: never;
         options?: never;
@@ -269,7 +268,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Обновить пару refresh/access токенов */
+        /** Refresh refresh/access token pair */
         post: operations["AuthController_refresh"];
         delete?: never;
         options?: never;
@@ -286,7 +285,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Деактивировать refresh-token */
+        /** Deactivate refresh token */
         post: operations["AuthController_logout"];
         delete?: never;
         options?: never;
@@ -301,7 +300,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Получить текущего пользователя по access токену */
+        /** Get current user by access token */
         get: operations["AuthController_getMe"];
         put?: never;
         post?: never;
@@ -357,7 +356,7 @@ export interface components {
             isImportant: boolean;
         };
         ReorderBoardsRequestPayload: {
-            /** @description ID элемента, после которого нужно поставить текущий */
+            /** @description ID of the element after which to place the current one */
             putAfterItemId?: Record<string, never>;
         };
         GlobalTaskListItemDto: {
@@ -448,9 +447,9 @@ export interface components {
             title: string;
         };
         MoveTaskToBoardRequestPayload: {
-            /** @description ID новой доски, в которую нужно переместить задачу */
+            /** @description ID of the new board to move the task to */
             targetBoardId: string;
-            /** @description ID задачи, после которой нужно вставить перемещаемую */
+            /** @description ID of the task after which to insert the moved task */
             putAfterItemId?: string;
         };
         UpdateTaskRequestPayload: {
@@ -464,19 +463,19 @@ export interface components {
             deadline?: string;
         };
         LoginRequestPayload: {
-            /** @description Код, полученный от oauth-сервер после редиректа */
+            /** @description Authorization code received from OAuth server after redirect */
             code: string;
             /**
-             * @description Укажите тоже значение, что и во время первого запроса на oauth-сервер
+             * @description Specify the same redirect URI used in the initial OAuth server request
              * @example http://localhost:3000/oauth2/callback
              */
             redirectUri: string;
             /**
-             * @description Срок жизни accessToken-а (по дефолту "3m"), Можно использовать значение в формате: be a string like "60s", "3m", "2h", "1d"
+             * @description Access token lifetime (default "3m"); must be a string like "60s", "3m", "2h", or "1d"
              * @example 3m
              */
-            accessTokenTTL: string;
-            /** @description Как долго будет жить refreshToken. Если true - 1 месяц, если false - 30 минут. Явно указанный accessTokenTTL не должен быть больше, чем время жизни refreshToken */
+            accessTokenTTL?: string;
+            /** @description Refresh token lifetime: if true, 30 days; if false, 30 minutes. accessTokenTTL must not exceed the refresh token lifetime */
             rememberMe: boolean;
         };
         RefreshOutput: {
@@ -495,6 +494,11 @@ export interface components {
             userId: string;
             login: string;
         };
+        /**
+         * Format: binary
+         * @description Файл в multipart/form-data
+         */
+        BinaryFile: string;
     };
     responses: never;
     parameters: never;
@@ -532,6 +536,7 @@ export type SchemaUnauthorizedException = components['schemas']['UnauthorizedExc
 export type SchemaRefreshRequestPayload = components['schemas']['RefreshRequestPayload'];
 export type SchemaLogoutRequestPayload = components['schemas']['LogoutRequestPayload'];
 export type SchemaGetMeOutput = components['schemas']['GetMeOutput'];
+export type SchemaBinaryFile = components['schemas']['BinaryFile'];
 export type $defs = Record<string, never>;
 export interface operations {
     BoardsController_getMyBoards: {
@@ -543,7 +548,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description 200 (Список досок успешно получен) */
+            /** @description 200 (Board list successfully retrieved) */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -552,7 +557,7 @@ export interface operations {
                     "application/json": components["schemas"]["GetMyBoardsOutput"];
                 };
             };
-            /** @description Превышено максимальное количество досок (403 Forbidden) */
+            /** @description Maximum board count exceeded (403 Forbidden) */
             403: {
                 headers: {
                     [name: string]: unknown;
@@ -573,7 +578,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description JSON:API список досок с пагинацией */
+            /** @description JSON:API list of boards with pagination */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -597,7 +602,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Доска успешно создана (201 Created) */
+            /** @description Board successfully created (201 Created) */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -606,7 +611,7 @@ export interface operations {
                     "application/json": components["schemas"]["GetBoardOutput"];
                 };
             };
-            /** @description Превышено максимальное количество досок (10) (403 Forbidden) */
+            /** @description Maximum board count (10) exceeded (403 Forbidden) */
             403: {
                 headers: {
                     [name: string]: unknown;
@@ -626,7 +631,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Доска успешно найдена */
+            /** @description Board successfully found */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -635,7 +640,7 @@ export interface operations {
                     "application/json": components["schemas"]["GetBoardOutput"];
                 };
             };
-            /** @description Доска с таким ID не найдена */
+            /** @description Board with this ID not found */
             404: {
                 headers: {
                     [name: string]: unknown;
@@ -659,7 +664,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Доска успешно обновлена (200 OK) */
+            /** @description Board successfully updated (200 OK) */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -668,14 +673,14 @@ export interface operations {
                     "application/json": components["schemas"]["GetBoardOutput"];
                 };
             };
-            /** @description Вы не являетесь владельцем доски (403 Forbidden) */
+            /** @description You are not the board owner (403 Forbidden) */
             403: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Доска не найдена (404 Not Found) */
+            /** @description Board not found (404 Not Found) */
             404: {
                 headers: {
                     [name: string]: unknown;
@@ -695,21 +700,21 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Доска успешно удалена (204 No Content) */
+            /** @description Board successfully deleted (204 No Content) */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Вы не владелец доски (403 Forbidden) */
+            /** @description You are not the board owner (403 Forbidden) */
             403: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Доска не найдена (404 Not Found) */
+            /** @description Board not found (404 Not Found) */
             404: {
                 headers: {
                     [name: string]: unknown;
@@ -733,7 +738,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Порядок досок успешно изменён (204 No Content) */
+            /** @description Board order successfully changed (204 No Content) */
             204: {
                 headers: {
                     [name: string]: unknown;
@@ -760,7 +765,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description 200 (Изображение успешно загружено и сохранено) */
+            /** @description 200 (Image successfully uploaded and saved) */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -769,21 +774,21 @@ export interface operations {
                     "application/json": components["schemas"]["BoardImagesOutputDTO"];
                 };
             };
-            /** @description 400 (Невалидный файл: невозможно определить размеры, неверная ориентация или слишком маленькая высота) */
+            /** @description 400 (Invalid file: cannot determine dimensions, wrong orientation or height too small) */
             400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description 403 (Вы не владелец доски) */
+            /** @description 403 (You are not the board owner) */
             403: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description 404 (Доска не найдена) */
+            /** @description 404 (Board not found) */
             404: {
                 headers: {
                     [name: string]: unknown;
@@ -804,7 +809,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Пагинированный список задач */
+            /** @description Paginated list of tasks */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -829,7 +834,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Пагинированный список задач конкретной доски */
+            /** @description Paginated list of tasks for specific board */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -838,7 +843,7 @@ export interface operations {
                     "application/json": components["schemas"]["BoardTaskListResponse"];
                 };
             };
-            /** @description Доска не найдена (если применимо) */
+            /** @description Board not found (if applicable) */
             404: {
                 headers: {
                     [name: string]: unknown;
@@ -862,7 +867,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Задача успешно создана (201 Created) */
+            /** @description Task successfully created (201 Created) */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -871,14 +876,14 @@ export interface operations {
                     "application/json": components["schemas"]["GetTaskOutput"];
                 };
             };
-            /** @description Доступ запрещён или превышен лимит задач (403 Forbidden) */
+            /** @description Access forbidden or task limit exceeded (403 Forbidden) */
             403: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Доска не найдена (404 Not Found) */
+            /** @description Board not found (404 Not Found) */
             404: {
                 headers: {
                     [name: string]: unknown;
@@ -898,7 +903,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Детали задачи с вложениями */
+            /** @description Task details with attachments */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -907,7 +912,7 @@ export interface operations {
                     "application/json": components["schemas"]["GetTaskOutput"];
                 };
             };
-            /** @description Задача с таким ID не найдена */
+            /** @description Task with this ID not found */
             404: {
                 headers: {
                     [name: string]: unknown;
@@ -932,7 +937,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Задача успешно обновлена (200 OK) */
+            /** @description Task successfully updated (200 OK) */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -941,14 +946,14 @@ export interface operations {
                     "application/json": components["schemas"]["GetTaskOutput"];
                 };
             };
-            /** @description Доступ запрещён (403 Forbidden) */
+            /** @description Access forbidden (403 Forbidden) */
             403: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Задача не найдена (404 Not Found) */
+            /** @description Task not found (404 Not Found) */
             404: {
                 headers: {
                     [name: string]: unknown;
@@ -969,21 +974,21 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Задача успешно удалена (200 OK) */
+            /** @description Task successfully deleted (200 OK) */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Доступ запрещён (403 Forbidden) */
+            /** @description Access forbidden (403 Forbidden) */
             403: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Задача не найдена (404 Not Found) */
+            /** @description Task not found (404 Not Found) */
             404: {
                 headers: {
                     [name: string]: unknown;
@@ -1008,28 +1013,28 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Порядок задач успешно обновлён (200 OK) */
+            /** @description Task order successfully updated (200 OK) */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Некорректный запрос: нельзя переместить задачу саму за себя (400 Bad Request) */
+            /** @description Invalid request: cannot move task after itself (400 Bad Request) */
             400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Доступ запрещён (403 Forbidden) */
+            /** @description Access forbidden (403 Forbidden) */
             403: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Задача или указанный putAfterItemId не найдены (404 Not Found) */
+            /** @description Task or specified putAfterItemId not found (404 Not Found) */
             404: {
                 headers: {
                     [name: string]: unknown;
@@ -1054,28 +1059,28 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Задача успешно перемещена (204 No Content) */
+            /** @description Task successfully moved (204 No Content) */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Некорректный запрос: нельзя переместить задачу саму за себя (400 Bad Request) */
+            /** @description Invalid request: cannot move task after itself (400 Bad Request) */
             400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Доступ запрещён (403 Forbidden) */
+            /** @description Access forbidden (403 Forbidden) */
             403: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Задача или целевая доска не найдены (404 Not Found) */
+            /** @description Task or target board not found (404 Not Found) */
             404: {
                 headers: {
                     [name: string]: unknown;
@@ -1095,21 +1100,21 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Файлы успешно загружены (201 Created) */
+            /** @description Files successfully uploaded (201 Created) */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Превышено максимальное количество вложений (403 Forbidden) */
+            /** @description Maximum attachment count exceeded (403 Forbidden) */
             403: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Задача не найдена (404 Not Found) */
+            /** @description Task not found (404 Not Found) */
             404: {
                 headers: {
                     [name: string]: unknown;
@@ -1130,21 +1135,21 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Вложение успешно удалено (200 OK) */
+            /** @description Attachment successfully deleted (200 OK) */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Доступ запрещён (403 Forbidden) */
+            /** @description Access forbidden (403 Forbidden) */
             403: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Задача или вложение не найдены (404 Not Found) */
+            /** @description Task or attachment not found (404 Not Found) */
             404: {
                 headers: {
                     [name: string]: unknown;
@@ -1155,10 +1160,10 @@ export interface operations {
     };
     AuthController_OauthRedirect: {
         parameters: {
-            query?: {
+            query: {
                 /** @description The callback URL to redirect after grand access,
                  *          https://oauth.apihub.it-incubator.io/realms/apihub/protocol/openid-connect/auth?client_id=trelly&response_type=code&redirect_uri=http://localhost:3000/oauth2/callback&scope=openid */
-                callbackUrl?: string;
+                callbackUrl: string;
             };
             header?: never;
             path?: never;
@@ -1166,7 +1171,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description OK: Редирект выполнен */
+            /** @description OK: Redirect executed successfully */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1188,7 +1193,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description OK: Успешно получена пара токенов */
+            /** @description OK: Token pair retrieved successfully */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1197,7 +1202,7 @@ export interface operations {
                     "application/json": components["schemas"]["RefreshOutput"];
                 };
             };
-            /** @description BadRequest: Неверный формат запроса или отсутствуют обязательные параметры */
+            /** @description Bad Request: Invalid request format or required parameters are missing */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -1206,7 +1211,7 @@ export interface operations {
                     "application/json": components["schemas"]["BadRequestException"];
                 };
             };
-            /** @description Unauthorized: Код недействителен, истёк или не передан, или не совпадает redirectUri */
+            /** @description Unauthorized: Code is invalid, expired, missing, or redirectUri does not match */
             401: {
                 headers: {
                     [name: string]: unknown;
@@ -1230,7 +1235,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description OK: Успешное обновление пары токенов */
+            /** @description OK: Token pair refreshed successfully */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1239,7 +1244,7 @@ export interface operations {
                     "application/json": components["schemas"]["RefreshOutput"];
                 };
             };
-            /** @description Unauthorized: Refresh-token недействителен, истёк или не передан */
+            /** @description Unauthorized: Refresh token is invalid, expired, or missing */
             401: {
                 headers: {
                     [name: string]: unknown;
@@ -1263,7 +1268,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description OK: refresh токен деактивирован, при этом access-токен остаётся ещё валидным. */
+            /** @description No Content: Refresh token deactivated; access token remains valid. */
             204: {
                 headers: {
                     [name: string]: unknown;
@@ -1281,7 +1286,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description OK: Успешное получение информации о пользователе */
+            /** @description OK: Successfully retrieved user information */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1290,7 +1295,7 @@ export interface operations {
                     "application/json": components["schemas"]["GetMeOutput"];
                 };
             };
-            /** @description Unauthorized: access токен отсутствует или недействителен */
+            /** @description Unauthorized: access token is missing or invalid */
             401: {
                 headers: {
                     [name: string]: unknown;

@@ -8,7 +8,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: Infinity,
-      gcTime: 10 * 1000,
+      gcTime: 60 * 1000,
     }
   }
 })
